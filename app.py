@@ -10,30 +10,97 @@ load_dotenv()
 # Configure page
 st.set_page_config(page_title="AI Document Analyzer", page_icon="📄", layout="wide")
 
-# Custom CSS for card-style containers
+# Custom CSS for optimized glassmorphism and background
 st.markdown("""
 <style>
-    /* Card style for metrics that adapts to light/dark mode */
-    div[data-testid="stMetric"] {
-        background-color: var(--secondary-background-color);
-        border: 1px solid var(--secondary-background-color);
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    /* Static Gradient Background to improve performance */
+    .stApp {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #ffffff;
     }
-    
-    /* Slight adjustments to tabs that adapt to light/dark mode */
+
+    /* Optimized Glassmorphism for sidebar */
+    [data-testid="stSidebar"] {
+        background: rgba(15, 32, 39, 0.7) !important;
+        backdrop-filter: blur(8px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Metric Cards Glassmorphism */
+    div[data-testid="stMetric"] {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    div[data-testid="stMetric"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    /* Tabs Styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 10px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 5px;
     }
     .stTabs [data-baseweb="tab"] {
-        border-radius: 4px 4px 0px 0px;
+        border-radius: 8px;
         padding: 10px 20px;
-        background-color: var(--secondary-background-color);
+        background-color: transparent;
+        color: rgba(255,255,255,0.7) !important;
+        transition: all 0.2s ease;
     }
     .stTabs [aria-selected="true"] {
-        background-color: transparent;
-        border-bottom: 2px solid var(--primary-color);
+        background-color: rgba(255, 255, 255, 0.15) !important;
+        border-bottom: none !important;
+        color: white !important;
+    }
+
+    /* Expanders and Chat messages (No blur for performance) */
+    [data-testid="stExpander"] {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+    
+    [data-testid="stChatMessage"] {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* Inputs and Buttons */
+    .stTextInput input, .stTextArea textarea, .stSelectbox select, [data-baseweb="select"] > div {
+        background: rgba(0, 0, 0, 0.2) !important;
+        color: white !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 8px !important;
+    }
+
+    .stButton button {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .stButton button:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Global text colors */
+    h1, h2, h3, h4, p, label, .stMarkdown {
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 </style>
 """, unsafe_allow_html=True)
